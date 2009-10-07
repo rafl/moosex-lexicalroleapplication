@@ -47,7 +47,7 @@ use namespace::clean;
 
 =head1 CAVEATS
 
-Actual C<lexical> role application isn't quite supported yet. The following
+Actual I<lexical> role application isn't quite supported yet. The following
 example won't do what it's supposed to just yet:
 
   {
@@ -56,6 +56,15 @@ example won't do what it's supposed to just yet:
   }
 
 =method apply ($role, $instance, \%rebless_params, \%application_options)
+
+Will apply C<$role> to C<$instance>. C<%rebless_params> will be passed to
+L<Class::MOP::Class/rebless_instance>. C<%application_options> will be passed
+to L<Moose::Meta::Role/apply>.
+
+A L<Scope::Guard|Scope::Guard> will be returned. Keep it around as long as you
+want C<$role> to be applied to C<$instance>. You can cancel role removal by
+calling C<dismiss> on the returned scope guard. If you want to remove the role
+immediately, you can simply undef the guard.
 
 =cut
 
