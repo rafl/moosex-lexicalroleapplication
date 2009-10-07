@@ -2,6 +2,7 @@ use strict;
 use warnings;
 
 package MooseX::LexicalRoleApplication;
+# ABSTRACT: Apply roles for a lexical scope only
 
 use Scope::Guard;
 use Scalar::Util 'blessed';
@@ -29,6 +30,34 @@ sub rebless_instance_back {
 }
 
 use namespace::clean;
+
+=head1 SYNOPSIS
+
+  my $obj = SomeClass->new;
+  $obj->method_from_role; # fails
+
+  {
+    my $guard = MooseX::LexicalRoleApplication->apply(SomeRole->meta, $obj);
+    $obj->method_from_role; # works
+  }
+
+  $obj->method_from_role; # fails
+
+=head1 DESCRIPTION
+
+=head1 CAVEATS
+
+Actual C<lexical> role application isn't quite supported yet. The following
+example won't do what it's supposed to just yet:
+
+  {
+    my $guard = MooseX::LexicalRoleApplication->apply($role, $obj);
+    $other_role->apply($obj);
+  }
+
+=method apply ($role, $instance, \%rebless_params, \%application_options)
+
+=cut
 
 sub apply {
     my ($class, $role, $instance, $rebless_params, $application_options) = @_;
