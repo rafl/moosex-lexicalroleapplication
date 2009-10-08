@@ -45,6 +45,8 @@ use namespace::clean;
 
 =head1 DESCRIPTION
 
+This module allows applying a role for the duration of a lexical scope only.
+
 =head1 CAVEATS
 
 Actual I<lexical> role application isn't quite supported yet. The following
